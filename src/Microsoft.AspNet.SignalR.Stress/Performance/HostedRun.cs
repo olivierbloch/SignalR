@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.md in the project root for license information.
 
 using Microsoft.AspNet.SignalR.Infrastructure;
-using Microsoft.AspNet.SignalR.Tests.Common.Infrastructure;
+using Microsoft.AspNet.SignalR.Stress.Infrastructure;
 
 namespace Microsoft.AspNet.SignalR.Stress.Performance
 {
