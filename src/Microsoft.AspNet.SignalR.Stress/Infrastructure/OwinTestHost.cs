@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.SignalR.Client.Http;
 using Microsoft.AspNet.SignalR.Client.Transports;
-using Microsoft.Owin.Testing;
+using Microsoft.Owin.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,23 +9,25 @@ using System.Threading.Tasks;
 
 namespace Microsoft.AspNet.SignalR.Stress.Infrastructure
 {
-    public class MemoryHost : ITestHost
+    public class OwinTestHost : ITestHost
     {
-        private readonly TestServer _testServer;
-        private readonly IHttpClient _client;
+        private static Random _random = new Random();
+
         private readonly TransportType _transportType;
+        private readonly string _url;
+        private IDisposable _server;
         private bool _disposed;
 
-        public MemoryHost(TransportType transport)
+        public OwinTestHost(TransportType transportType)
         {
-            _testServer = TestServer.Create<Startup>();
-            _client = new MemoryClient(_testServer.Handler);
-            _transportType = transport;
-
+            _transportType = transportType;
+            _url = "http://localhost:" + _random.Next(8000, 9000);
             _disposed = false;
         }
 
-        string ITestHost.Url { get { return "http://NotARealUrl"; } }
+        string ITestHost.Url { get { return _url; } }
+
+        IDependencyResolver ITestHost.Resolver { get; set; }
 
         void ITestHost.Initialize(int? keepAlive,
             int? connectionTimeout,
@@ -34,39 +36,37 @@ namespace Microsoft.AspNet.SignalR.Stress.Infrastructure
             int? maxIncomingWebSocketMessageSize,
             bool enableAutoRejoiningGroups)
         {
-            _client.Initialize(null);
+            _server = WebApp.Start<Startup>(_url);
 
             (this as ITestHost).TransportFactory = () =>
             {
                 switch (_transportType)
                 {
                     case TransportType.Websockets:
-                        return new WebSocketTransport(_client);
+                        return new WebSocketTransport(new DefaultHttpClient());
                     case TransportType.ServerSentEvents:
-                        return new ServerSentEventsTransport(_client);
+                        return new ServerSentEventsTransport(new DefaultHttpClient());
                     case TransportType.ForeverFrame:
                         break;
                     case TransportType.LongPolling:
-                        return new LongPollingTransport(_client);
+                        return new LongPollingTransport(new DefaultHttpClient());
                     default:
-                        return new AutoTransport(_client);
+                        return new AutoTransport(new DefaultHttpClient());
                 }
 
                 throw new NotSupportedException("Transport not supported");
             };
         }
 
-        IDependencyResolver ITestHost.Resolver { get; set; }
+        Func<Client.Transports.IClientTransport> ITestHost.TransportFactory { get; set; }
 
         void IDisposable.Dispose()
         {
             if (!_disposed)
             {
-                _testServer.Dispose();
+                _server.Dispose();
                 _disposed = true;
             }
         }
-
-        Func<IClientTransport> ITestHost.TransportFactory { get; set; }
     }
 }

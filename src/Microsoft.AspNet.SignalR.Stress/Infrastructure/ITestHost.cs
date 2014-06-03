@@ -9,7 +9,10 @@ using Microsoft.AspNet.SignalR.Client.Transports;
 namespace Microsoft.AspNet.SignalR.Stress.Infrastructure
 {
     public interface ITestHost : IDisposable
-    {        IDependencyResolver Resolver { get; set; }
+    {
+        IDependencyResolver Resolver { get; set; }
+
+        string Url { get; }
 
         void Initialize(int? keepAlive = -1,
                 int? connectionTimeout = 110,

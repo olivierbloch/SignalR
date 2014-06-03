@@ -105,10 +105,13 @@
     <Compile Include="..\Microsoft.AspNet.SignalR.Core\TaskAsyncHelper.cs">
       <Link>TaskAsyncHelper.cs</Link>
     </Compile>
+    <Compile Include="Infrastructure\DefaultHttpClient_client.cs" />
     <Compile Include="Infrastructure\HostedTestFactory.cs" />
+    <Compile Include="Infrastructure\HostType.cs" />
     <Compile Include="Infrastructure\ITestHost.cs" />
     <Compile Include="Infrastructure\MemoryClient.cs" />
     <Compile Include="Infrastructure\MemoryHost.cs" />
+    <Compile Include="Infrastructure\OwinTestHost.cs" />
     <Compile Include="Infrastructure\ProcessExtensions.cs" />
     <Compile Include="Infrastructure\SimpleEchoHub.cs" />
     <Compile Include="Infrastructure\Startup.cs" />
