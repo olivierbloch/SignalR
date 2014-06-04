@@ -21,6 +21,10 @@ namespace Microsoft.AspNet.SignalR.Stress.Infrastructure
                 int? maxIncomingWebSocketMessageSize = 64 * 1024, // Default 64 KB
                 bool enableAutoRejoiningGroups = false);
 
+        Task Get(string uri);
+
+        Task Post(string uri, IDictionary<string, string> data);
+
         Func<IClientTransport> TransportFactory { get; set; }
     }
 }

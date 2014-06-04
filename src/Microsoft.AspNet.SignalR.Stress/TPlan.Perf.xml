@@ -125,12 +125,12 @@
   </commands>
   
   <plan>
-    <!--<run command="ConnectionRun" role="server-01" output="true" measure="StartAndStop" />
+    <!--<run command="ConnectionRun" role="server-01" output="true" measure="StartAndStop" />-->
 
     <run command="SendReceive-LongPolling" role="server-01" output="true" measure="StartAndStop" />
     <run command="SendReceive-ServerSentEvents" role="server-01" output="true" measure="StartAndStop" />
     
-    <run command="HubInvocation" role="server-01" output="true" measure="StartAndStop" />-->
+    <!--<run command="HubInvocation" role="server-01" output="true" measure="StartAndStop" />-->
 
     <!-- End to end hub invocation tests -->
     <run command="SimpleEchoHub-LongPolling" role="server-01" output="true" measure="StartAndStop" />

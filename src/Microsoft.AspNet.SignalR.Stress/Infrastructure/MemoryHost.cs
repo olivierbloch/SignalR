@@ -56,6 +56,16 @@ namespace Microsoft.AspNet.SignalR.Stress.Infrastructure
             };
         }
 
+        Task ITestHost.Get(string uri)
+        {
+            return _client.Get(uri, r => { }, isLongRunning: false);
+        }
+
+        Task ITestHost.Post(string uri, IDictionary<string, string> data)
+        {
+            return _client.Post(uri, r => { }, data, isLongRunning: false);
+        }
+
         IDependencyResolver ITestHost.Resolver { get; set; }
 
         void IDisposable.Dispose()

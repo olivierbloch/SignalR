@@ -5,10 +5,8 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Hosting.Memory;
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.AspNet.SignalR.Stress.Performance;
-using Microsoft.AspNet.SignalR.StressServer.Connections;
 using Owin;
 
 namespace Microsoft.AspNet.SignalR.Stress

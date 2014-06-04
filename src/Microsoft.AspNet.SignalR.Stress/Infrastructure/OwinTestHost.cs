@@ -4,6 +4,7 @@ using Microsoft.Owin.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -58,7 +59,20 @@ namespace Microsoft.AspNet.SignalR.Stress.Infrastructure
             };
         }
 
-        Func<Client.Transports.IClientTransport> ITestHost.TransportFactory { get; set; }
+        Func<IClientTransport> ITestHost.TransportFactory { get; set; }
+
+        Task ITestHost.Get(string uri)
+        {
+            var client = new HttpClient();
+            return client.GetAsync(uri);
+        }
+
+        Task ITestHost.Post(string uri, IDictionary<string, string> data)
+        {
+            var client = new HttpClient();
+            var content = new FormUrlEncodedContent(data);
+            return client.PostAsync(uri, content);
+        }
 
         void IDisposable.Dispose()
         {
