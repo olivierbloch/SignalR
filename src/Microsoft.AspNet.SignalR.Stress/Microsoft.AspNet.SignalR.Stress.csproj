@@ -124,6 +124,7 @@
     <Compile Include="Performance\SimpleEchoHubRun.cs" />
     <Compile Include="Infrastructure\Utility.cs" />
     <Compile Include="IRun.cs" />
+    <Compile Include="Performance\SqlMessageBusRun.cs" />
     <Compile Include="Performance\Subscriber.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

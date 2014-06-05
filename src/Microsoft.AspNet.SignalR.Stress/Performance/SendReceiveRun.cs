@@ -24,7 +24,7 @@ namespace Microsoft.AspNet.SignalR.Stress
         {
             get { return "echo"; }
         }
-        
+
         protected override void InitializePerformanceCounters()
         {
         }
@@ -52,7 +52,7 @@ namespace Microsoft.AspNet.SignalR.Stress
         protected override Task Send(int senderIndex, string source)
         {
             var postData = new Dictionary<string, string> { { "data", Payload } };
-            
+
             return Host.Post(Host.Url + "/" + Endpoint + "/send?transport=" + RunData.Transport + "&connectionToken=" + senderIndex.ToString(), postData);
         }
 

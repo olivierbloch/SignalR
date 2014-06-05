@@ -139,8 +139,8 @@
     <!--Message bus tests -->
     <run command="MessageBus" role="server-01" output="true" measure="StartAndStop" />
 
-    <!--<run command="SetupSqlServer" role="dbserver-01" output="true" />
-    <run command="SqlMessageBus" role="server-01" output="true" measure="StartAndStop" />-->
+    <run command="SetupSqlServer" role="dbserver-01" output="true" />
+    <run command="SqlMessageBus" role="server-01" output="true" measure="StartAndStop" />
     
     <!--<run command="RedisMessageBus" role="server-01" output="true" measure="StartAndStop" />-->
 

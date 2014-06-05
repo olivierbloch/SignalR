@@ -19,6 +19,8 @@ namespace Microsoft.AspNet.SignalR.Stress.Infrastructure
         private IDisposable _server;
         private bool _disposed;
 
+        private Lazy<HttpClient> _client = new Lazy<HttpClient>();
+
         public OwinTestHost(TransportType transportType)
         {
             _transportType = transportType;
@@ -63,21 +65,19 @@ namespace Microsoft.AspNet.SignalR.Stress.Infrastructure
 
         Task ITestHost.Get(string uri)
         {
-            var client = new HttpClient();
-            return client.GetAsync(uri);
+            return _client.Value.GetAsync(uri);
         }
 
         Task ITestHost.Post(string uri, IDictionary<string, string> data)
         {
-            var client = new HttpClient();
-            var content = new FormUrlEncodedContent(data);
-            return client.PostAsync(uri, content);
+            return _client.Value.PostAsync(uri, new FormUrlEncodedContent(data ?? new Dictionary<string, string>()));
         }
 
         void IDisposable.Dispose()
         {
             if (!_disposed)
             {
+                _client.Value.Dispose();
                 _server.Dispose();
                 _disposed = true;
             }
