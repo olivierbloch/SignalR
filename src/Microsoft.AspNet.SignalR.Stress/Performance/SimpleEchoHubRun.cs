@@ -46,6 +46,7 @@ namespace Microsoft.AspNet.SignalR.Stress.Performance
 
             // set up the client and start it
             HubConnection connection = _connections[connectionIndex];
+            connection.TraceLevel = TraceLevels.None;
             IHubProxy proxy = connection.CreateHubProxy("SimpleEchoHub");
 
             proxy.On<long>("echo", startTicks =>

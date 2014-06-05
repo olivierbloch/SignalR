@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Infrastructure;
 using Owin;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,9 @@ namespace Microsoft.AspNet.SignalR.Stress.Infrastructure
     {
         public void Configuration(IAppBuilder app)
         {
+            app.Properties["host.AppName"] = "Stress";
             app.MapSignalR();
+            GlobalHost.DependencyResolver.Register(typeof(IProtectedData), () => new EmptyProtectedData());
         }
     }
 }

@@ -106,6 +106,7 @@
       <Link>TaskAsyncHelper.cs</Link>
     </Compile>
     <Compile Include="Infrastructure\DefaultHttpClient_client.cs" />
+    <Compile Include="Infrastructure\EmptyProtectedData.cs" />
     <Compile Include="Infrastructure\HostedTestFactory.cs" />
     <Compile Include="Infrastructure\HostType.cs" />
     <Compile Include="Infrastructure\ITestHost.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Infrastructure\Startup.cs" />
     <Compile Include="Infrastructure\TransportType.cs" />
     <Compile Include="Performance\HostedRun.cs" />
+    <Compile Include="Performance\HubInvocationRun.cs" />
     <Compile Include="Performance\MessageBusRun.cs" />
     <Compile Include="Performance\SendReceiveRun.cs" />
     <Compile Include="Performance\SimpleEchoHubRun.cs" />

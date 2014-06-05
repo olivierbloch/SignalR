@@ -53,17 +53,17 @@ namespace Microsoft.AspNet.SignalR.Stress
         {
             var postData = new Dictionary<string, string> { { "data", Payload } };
             
-            return Host.Post("http://foo/" + Endpoint + "/send?transport=" + RunData.Transport + "&connectionToken=" + senderIndex.ToString(), postData);
+            return Host.Post(Host.Url + "/" + Endpoint + "/send?transport=" + RunData.Transport + "&connectionToken=" + senderIndex.ToString(), postData);
         }
 
         private Task ProcessRequest(string connectionToken)
         {
-            return Host.Get("http://foo/" + Endpoint + "/connect?transport=" + RunData.Transport + "&connectionToken=" + connectionToken + "&disableResponseBody=true");
+            return Host.Get(Host.Url + "/" + Endpoint + "/connect?transport=" + RunData.Transport + "&connectionToken=" + connectionToken + "&disableResponseBody=true");
         }
 
         private Task Abort(string connectionToken)
         {
-            return Host.Post("http://foo/" + Endpoint + "/abort?transport=" + RunData.Transport + "&connectionToken=" + connectionToken, data: null);
+            return Host.Post(Host.Url + "/" + Endpoint + "/abort?transport=" + RunData.Transport + "&connectionToken=" + connectionToken, data: null);
         }
 
         private void LongPollingLoop(string connectionId)
