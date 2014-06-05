@@ -120,6 +120,7 @@
     <Compile Include="Performance\HostedRun.cs" />
     <Compile Include="Performance\HubInvocationRun.cs" />
     <Compile Include="Performance\MessageBusRun.cs" />
+    <Compile Include="Performance\RedisMessageBusRun.cs" />
     <Compile Include="Performance\SendReceiveRun.cs" />
     <Compile Include="Performance\SimpleEchoHubRun.cs" />
     <Compile Include="Infrastructure\Utility.cs" />
