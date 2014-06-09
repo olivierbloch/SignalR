@@ -3,6 +3,7 @@ using Microsoft.AspNet.SignalR.Client.Transports;
 using Microsoft.Owin.Testing;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,12 +57,12 @@ namespace Microsoft.AspNet.SignalR.Stress.Infrastructure
             };
         }
 
-        Task ITestHost.Get(string uri)
+        Task<IResponse> ITestHost.Get(string uri)
         {
             return _client.Get(uri, r => { }, isLongRunning: false);
         }
 
-        Task ITestHost.Post(string uri, IDictionary<string, string> data)
+        Task<IResponse> ITestHost.Post(string uri, IDictionary<string, string> data)
         {
             return _client.Post(uri, r => { }, data, isLongRunning: false);
         }

@@ -3,6 +3,7 @@ using Microsoft.AspNet.SignalR.Client.Transports;
 using Microsoft.Owin.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.AspNet.SignalR.Stress.Infrastructure
 {
-    public class OwinTestHost : ITestHost
+    public class HttpListenerHost : ITestHost
     {
         private static Random _random = new Random();
 
@@ -21,7 +22,7 @@ namespace Microsoft.AspNet.SignalR.Stress.Infrastructure
 
         private Lazy<HttpClient> _client = new Lazy<HttpClient>();
 
-        public OwinTestHost(TransportType transportType)
+        public HttpListenerHost(TransportType transportType)
         {
             _transportType = transportType;
             _url = "http://localhost:" + _random.Next(8000, 9000);
@@ -63,14 +64,18 @@ namespace Microsoft.AspNet.SignalR.Stress.Infrastructure
 
         Func<IClientTransport> ITestHost.TransportFactory { get; set; }
 
-        Task ITestHost.Get(string uri)
+        async Task<IResponse> ITestHost.Get(string uri)
         {
-            return _client.Value.GetAsync(uri);
+            HttpResponseMessage response = await _client.Value.GetAsync(uri);
+            await response.Content.ReadAsStreamAsync();
+            return new ResponseWrapper(response);
         }
 
-        Task ITestHost.Post(string uri, IDictionary<string, string> data)
+        async Task<IResponse> ITestHost.Post(string uri, IDictionary<string, string> data)
         {
-            return _client.Value.PostAsync(uri, new FormUrlEncodedContent(data ?? new Dictionary<string, string>()));
+            HttpResponseMessage response = await _client.Value.PostAsync(uri, new FormUrlEncodedContent(data ?? new Dictionary<string, string>()));
+            await response.Content.ReadAsStreamAsync();
+            return new ResponseWrapper(response);
         }
 
         void IDisposable.Dispose()
@@ -80,6 +85,26 @@ namespace Microsoft.AspNet.SignalR.Stress.Infrastructure
                 _client.Value.Dispose();
                 _server.Dispose();
                 _disposed = true;
+            }
+        }
+
+        private class ResponseWrapper : IResponse
+        {
+            private readonly HttpResponseMessage _response;
+
+            public ResponseWrapper(HttpResponseMessage response)
+            {
+                _response = response;
+            }
+
+            public Stream GetStream()
+            {
+                return _response.Content.ReadAsStreamAsync().Result;
+            }
+
+            public void Dispose()
+            {
+                _response.Dispose();
             }
         }
     }

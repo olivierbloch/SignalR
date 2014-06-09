@@ -15,6 +15,7 @@ namespace Microsoft.AspNet.SignalR.Stress.Infrastructure
         {
             app.Properties["host.AppName"] = "Stress";
             app.MapSignalR();
+            app.MapSignalR<StressConnection>("/echo");
             GlobalHost.DependencyResolver.Register(typeof(IProtectedData), () => new EmptyProtectedData());
         }
     }

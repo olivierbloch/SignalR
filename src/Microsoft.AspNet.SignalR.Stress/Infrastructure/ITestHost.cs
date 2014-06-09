@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Microsoft.AspNet.SignalR.Client.Transports;
+using System.IO;
+using Microsoft.AspNet.SignalR.Client.Http;
 
 namespace Microsoft.AspNet.SignalR.Stress.Infrastructure
 {
@@ -21,9 +22,9 @@ namespace Microsoft.AspNet.SignalR.Stress.Infrastructure
                 int? maxIncomingWebSocketMessageSize = 64 * 1024, // Default 64 KB
                 bool enableAutoRejoiningGroups = false);
 
-        Task Get(string uri);
+        Task<IResponse> Get(string uri);
 
-        Task Post(string uri, IDictionary<string, string> data);
+        Task<IResponse> Post(string uri, IDictionary<string, string> data);
 
         Func<IClientTransport> TransportFactory { get; set; }
     }

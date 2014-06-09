@@ -34,7 +34,7 @@ namespace Microsoft.AspNet.SignalR.Stress.Infrastructure
             switch (hostType)
             {
                 case HostType.HttpListener:
-                    host = new OwinTestHost(transportType);
+                    host = new HttpListenerHost(transportType);
                     break;
                 case HostType.Memory:
                 default:
