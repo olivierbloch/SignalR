@@ -105,7 +105,7 @@
       Microsoft.AspNet.SignalR.Stress.exe /Run:RedisMessageBus /Senders:5 /RedisServer:{dbserver-01} /RedisPort:6379
     </command>
 
-    <!-- external host-->
+    <!-- External host-->
     <command name="CopyWWW" wait="Exit">
       {bin}\xcopy /ecyi artifacts\Release\projects\Microsoft.AspNet.SignalR.LoadTestHarness \\{server-01}\perftestbits\www
     </command>
