@@ -145,9 +145,9 @@
     <run command="RedisMessageBus" role="server-01" output="true" measure="StartAndStop" />
 
     <!--External host hub tests-->
-    <!--<run command="CopyWWW" role="controller" output="true" />-->
-    <run command="SetupIIS" role="server-01" output="true" />
-    <!--<run command="SimpleEchoHub-External-LongPolling" role="client-01" output="true" measure="StartAndStop" />
+    <run command="CopyWWW" role="controller" output="true" />
+    <!--<run command="SetupIIS" role="server-01" output="true" />
+    <run command="SimpleEchoHub-External-LongPolling" role="client-01" output="true" measure="StartAndStop" />
     
     <run command="SetupIIS" role="server-01" output="true" />
     <run command="SimpleEchoHub-External-ServerSentEvents" role="client-01" output="true" measure="StartAndStop" />
