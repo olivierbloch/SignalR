@@ -36,6 +36,9 @@ namespace Microsoft.AspNet.SignalR.Stress.Infrastructure
                 case HostType.HttpListener:
                     host = new HttpListenerHost(transportType);
                     break;
+                case HostType.External:
+                    host = new ExternalHost(transportType, url);
+                    break;
                 case HostType.Memory:
                 default:
                     host = new MemoryHost(transportType);

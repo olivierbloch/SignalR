@@ -107,6 +107,7 @@
     </Compile>
     <Compile Include="Infrastructure\DefaultHttpClient_client.cs" />
     <Compile Include="Infrastructure\EmptyProtectedData.cs" />
+    <Compile Include="Infrastructure\ExternalHost.cs" />
     <Compile Include="Infrastructure\HostedTestFactory.cs" />
     <Compile Include="Infrastructure\HostType.cs" />
     <Compile Include="Infrastructure\ITestHost.cs" />
