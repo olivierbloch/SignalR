@@ -35,7 +35,7 @@ namespace Microsoft.AspNet.SignalR.Stress.Performance
         public override void Initialize()
         {
             // Create the host
-            Host = HostedTestFactory.CreateHost(RunData.Host, RunData.Transport, ScenarioName, RunData.Url);
+            Host = StressHostFactory.CreateHost(RunData.Host, RunData.Transport, ScenarioName, RunData.Url);
             Host.Resolver = Resolver;
             Host.Initialize();
 
