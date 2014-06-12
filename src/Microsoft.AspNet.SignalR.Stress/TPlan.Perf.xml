@@ -74,9 +74,9 @@
   </metadata>
 
   <commands>
-    <!--<command name="ConnectionRun" wait="Exit">
+    <command name="ConnectionRun" wait="Exit">
       Microsoft.AspNet.SignalR.Stress.exe /Run:ConnectionRun /Senders:5
-    </command>-->
+    </command>
     <command name="SendReceive-LongPolling" wait="Exit">
       Microsoft.AspNet.SignalR.Stress.exe /Run:SendReceive /Transport:LongPolling /Senders:5
     </command>
