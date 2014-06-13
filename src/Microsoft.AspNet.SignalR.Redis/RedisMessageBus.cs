@@ -29,6 +29,12 @@ namespace Microsoft.AspNet.SignalR.Redis
         private int _state;
         private readonly object _callbackLock = new object();
 
+        public RedisMessageBus(IDependencyResolver resolver, RedisScaleoutConfiguration configuration, TraceSource trace)
+            : base(resolver, configuration)
+        {
+            _trace = trace;
+        }
+
         [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "Reviewed")]
         public RedisMessageBus(IDependencyResolver resolver, RedisScaleoutConfiguration configuration)
             : base(resolver, configuration)
@@ -50,6 +56,21 @@ namespace Microsoft.AspNet.SignalR.Redis
         }
 
         public TimeSpan ReconnectDelay { get; set; }
+
+        public virtual void OpenStream(int streamIndex)
+        {
+            Open(streamIndex);
+        }
+
+        public virtual void InvokeConnectionRestored()
+        {
+            OnConnectionRestored(null, null);
+        }
+
+        public int GetConnectionState()
+        {
+            return _state;
+        }
 
         protected override Task Send(int streamIndex, IList<Message> messages)
         {
@@ -130,13 +151,14 @@ namespace Microsoft.AspNet.SignalR.Redis
             _trace.TraceError("OnConnectionError - " + e.Message);
         }
 
+
         private void OnConnectionRestored(object sender, ConnectionFailedEventArgs e)
         {
             _trace.TraceInformation("OnConnectionRestored");
 
             Interlocked.Exchange(ref _state, State.Connected);
 
-            Open(0);
+            OpenStream(0);
         }
 
 
@@ -167,7 +189,7 @@ namespace Microsoft.AspNet.SignalR.Redis
 
                     if (oldState == State.Closed)
                     {
-                        Open(0);
+                        OpenStream(0);
                     }
                     else
                     {
