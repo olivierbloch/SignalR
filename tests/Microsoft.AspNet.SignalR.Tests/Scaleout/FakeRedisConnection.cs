@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Redis;
 
@@ -21,6 +22,11 @@ namespace Microsoft.AspNet.SignalR.Tests.Scaleout
         }
 
         public virtual Task ScriptEvaluateAsync(int database, string script, string key, byte[] messageArguments)
+        {
+            return TaskAsyncHelper.Empty;
+        }
+
+        public virtual Task RestoreLatestValueForKey(TraceSource trace)
         {
             return TaskAsyncHelper.Empty;
         }

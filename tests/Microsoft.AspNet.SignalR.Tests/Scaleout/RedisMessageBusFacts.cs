@@ -33,8 +33,29 @@ namespace Microsoft.AspNet.SignalR.Tests.Scaleout
             var instance = redisMessageBus.Object;
 
             Assert.True(wh.Wait(TimeSpan.FromSeconds(5)));
+
             redisConnection.Raise(mock => mock.ConnectionRestored += (sender, ex) => { }, new Exception());
+
             Assert.True(openInvoked, "Open method not invoked");
+        }
+        [Fact]
+        public async Task RestoreLatestValueForKeyCalledOnConnectionRestored()
+        {
+            bool restoreLatestValueForKey = false;
+
+            var redisConnection = new Mock<FakeRedisConnection>() { CallBase = true };
+
+            redisConnection.Setup(m => m.RestoreLatestValueForKey(It.IsAny<TraceSource>())).Returns(TaskAsyncHelper.Empty).Callback(() =>
+            {
+                restoreLatestValueForKey = true;
+            });
+
+            var redisMessageBus = new Mock<RedisMessageBus>(new DefaultDependencyResolver(), new RedisScaleoutConfiguration("connection", "Key"),
+                redisConnection.Object, new TraceSource("RedisTest")) { CallBase = true };
+
+            await redisMessageBus.Object.OnConnectionRestored();
+
+            Assert.True(restoreLatestValueForKey, "RestoreLatestValueForKey not invoked");
         }
 
         [Fact]
