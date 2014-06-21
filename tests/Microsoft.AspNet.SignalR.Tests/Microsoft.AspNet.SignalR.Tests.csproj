@@ -87,6 +87,7 @@
     <Compile Include="PersistentConnectionFacts.cs" />
     <Compile Include="PersistentResponseFacts.cs" />
     <Compile Include="BufferTextWriterFacts.cs" />
+    <Compile Include="Scaleout\FakeRedisConnection.cs" />
     <Compile Include="Scaleout\RedisMessageBusFacts.cs" />
     <Compile Include="Server\AckHandlerFacts.cs" />
     <Compile Include="Server\Hubs\HubFacts.cs" />
